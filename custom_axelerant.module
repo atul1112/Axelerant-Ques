@@ -1,0 +1,53 @@
+<?php
+/**
+ * @file
+ * Module file for common functionalities related to System Site Information Alter.
+ * https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21State%21State.php/class/State/8.2.x
+ */
+
+use \Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_id_alter().
+ * System Site Information form Alter : added new field 'siteapikey' and changed save button title
+ */
+function custom_axelerant_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'system_site_information_settings') {
+   $form['site_information']['siteapikey'] = array(
+     '#title' => t('Site API Key'),
+     '#description' => t('Enter Site API Key in order to get nodes of the type page as JSON'),
+     '#type' => 'textfield',
+     '#default_value' => \Drupal::state()->get('siteapikey','No API Key yet'),
+   );
+   $form['#validate'][] = 'custom_axelerant_validate_siteapikey';
+   $form['#submit'][] = 'custom_axelerant_form_alter_submit';
+   
+   if ($form['site_information']['siteapikey']['#default_value'] != 'No API Key yet') {
+    $form['actions']['submit']['#value'] = t('Update Configuration');
+   }
+ }
+}
+
+/**
+ * Validation handler for siteapikey in
+ * system_site_information_settings form.
+ */
+function custom_axelerant_validate_siteapikey($form, &$form_state) {
+  if(empty($form_state->getValue('siteapikey'))) {
+    form_set_error('siteapikey',t('The Site API Key must not be empty!'));
+  }
+}
+
+/**
+ * Submit handler for
+ * system_site_information_settings form.
+ */
+function custom_axelerant_form_alter_submit($form, &$form_state) {
+  $site_api = $form_state->getValue('siteapikey');
+  \Drupal::state()->set('siteapikey',$site_api);
+  drupal_set_message(t('The Site API Key has been successfully saved to @value.', array('@value' => $site_api))); 
+}
+
+ 
+
+

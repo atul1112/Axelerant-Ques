@@ -1,0 +1,6 @@
+custom_axelerant.page_json:
+  path: '/page_json/{node}'
+  defaults:
+    _controller: '\Drupal\custom_axelerant\Controller\customAxelerantController::axelerant_page_json_output'
+  requirements:
+    _permission: 'administer site configuration'

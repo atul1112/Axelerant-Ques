@@ -1,0 +1,27 @@
+<?php
+/**
+ * @file
+ * Install and uninstall functions for the custom_axelerant module.
+ *
+ * This file contains the functions required to perform install and
+ * uninstall operations.
+ * https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21State%21State.php/class/State/8.2.x
+ */
+ 
+/**
+ * Implements hook_install().
+ */
+function custom_axelerant_install() {
+  // Define global variable to set - axelerant_site_api_key.
+  \Drupal::state()->set('siteapikey','No API Key yet');
+}
+
+/**
+ * Implements hook_uninstall().
+ * It's good to clean up after ourselves.
+ */
+function custom_axelerant_uninstall() {
+  // Delete global variable - axelerant_site_api_key.
+  \Drupal::state()->delete('siteapikey');
+}
+

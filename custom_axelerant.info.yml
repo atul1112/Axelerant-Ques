@@ -1,0 +1,5 @@
+name: Custom Axelerant
+description: Converts node content to Json format in your Drupal site.<br>Author - <a href="mailto:Atul12nov@gmail.com">Jatin Rupeja</a>
+package: Axelerant
+type: module
+core: 8.x
